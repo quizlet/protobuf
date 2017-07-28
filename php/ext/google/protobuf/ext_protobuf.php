@@ -55,24 +55,24 @@ namespace Google\Protobuf\Internal {
 
 	<<__NativeData("ZendCompat")>>
 	class GPBType {
-	    <<__Native("ZendCompat")>> const DOUBLE   =  1;
-	    <<__Native("ZendCompat")>> const FLOAT    =  2;
-	    <<__Native("ZendCompat")>> const INT64    =  3;
-	    <<__Native("ZendCompat")>> const UINT64   =  4;
-	    <<__Native("ZendCompat")>> const INT32    =  5;
-	    <<__Native("ZendCompat")>> const FIXED64  =  6;
-	    <<__Native("ZendCompat")>> const FIXED32  =  7;
-	    <<__Native("ZendCompat")>> const BOOL     =  8;
-	    <<__Native("ZendCompat")>> const STRING   =  9;
-	    <<__Native("ZendCompat")>> const GROUP    = 10;
-	    <<__Native("ZendCompat")>> const MESSAGE  = 11;
-	    <<__Native("ZendCompat")>> const BYTES    = 12;
-	    <<__Native("ZendCompat")>> const UINT32   = 13;
-	    <<__Native("ZendCompat")>> const ENUM     = 14;
-	    <<__Native("ZendCompat")>> const SFIXED32 = 15;
-	    <<__Native("ZendCompat")>> const SFIXED64 = 16;
-	    <<__Native("ZendCompat")>> const SINT32   = 17;
-	    <<__Native("ZendCompat")>> const SINT64   = 18;
+	    const DOUBLE   =  1;
+	    const FLOAT    =  2;
+	    const INT64    =  3;
+	    const UINT64   =  4;
+	    const INT32    =  5;
+	    const FIXED64  =  6;
+	    const FIXED32  =  7;
+	    const BOOL     =  8;
+	    const STRING   =  9;
+	    const GROUP    = 10;
+	    const MESSAGE  = 11;
+	    const BYTES    = 12;
+	    const UINT32   = 13;
+	    const ENUM     = 14;
+	    const SFIXED32 = 15;
+	    const SFIXED64 = 16;
+	    const SINT32   = 17;
+	    const SINT64   = 18;
 	}
 
 	<<__NativeData("ZendCompat")>>
