@@ -103,6 +103,7 @@ class CodedOutputStream
 
     public static function writeVarintToArray($value, &$buffer, $trim = false)
     {
+        \QMetric::startNonoverlappingBenchmark('app_time_protobuf_writeVarintToArray');
         $current = 0;
 
         $high = 0;
@@ -122,6 +123,7 @@ class CodedOutputStream
             $current++;
         }
         $buffer[$current] = chr($low);
+        \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_writeVarintToArray');
         return $current + 1;
     }
 

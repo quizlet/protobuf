@@ -61,14 +61,17 @@ class GPBWire
 
     public static function getWireType($type)
     {
+        \QMetric::startNonoverlappingBenchmark('app_time_protobuf_getWireType');
         switch ($type) {
             case GPBType::FLOAT:
             case GPBType::FIXED32:
             case GPBType::SFIXED32:
+                \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_getWireType');
                 return self::WIRETYPE_FIXED32;
             case GPBType::DOUBLE:
             case GPBType::FIXED64:
             case GPBType::SFIXED64:
+                \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_getWireType');
                 return self::WIRETYPE_FIXED64;
             case GPBType::UINT32:
             case GPBType::UINT64:
@@ -78,16 +81,20 @@ class GPBWire
             case GPBType::SINT64:
             case GPBType::ENUM:
             case GPBType::BOOL:
+                \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_getWireType');
                 return self::WIRETYPE_VARINT;
             case GPBType::STRING:
             case GPBType::BYTES:
             case GPBType::MESSAGE:
+                \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_getWireType');
                 return self::WIRETYPE_LENGTH_DELIMITED;
             case GPBType::GROUP:
                 user_error("Unsupported type.");
+                \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_getWireType');
                 return 0;
             default:
                 user_error("Unsupported type.");
+                \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_getWireType');
                 return 0;
         }
     }
