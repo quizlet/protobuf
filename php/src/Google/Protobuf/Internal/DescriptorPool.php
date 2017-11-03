@@ -57,7 +57,7 @@ class DescriptorPool
 
     public function internalAddGeneratedFile($data)
     {
-        \QMetric::startNonoverlappingBenchmark('app_time_protobuf_internalAddGeneratedFile');
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         $files = new FileDescriptorSet();
         $files->mergeFromString($data);
         $file = FileDescriptor::buildFromProto($files->getFile()[0]);
@@ -76,7 +76,7 @@ class DescriptorPool
             $this->crossLink($desc);
         }
         unset($desc);
-        \QMetric::profileNonoverlapping('spanner.app_time.protobuf', 'app_time_protobuf_internalAddGeneratedFile');
+        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
     }
 
     public function addMessage($name, $klass)
