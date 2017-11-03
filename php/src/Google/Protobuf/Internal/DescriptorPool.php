@@ -58,25 +58,28 @@ class DescriptorPool
     public function internalAddGeneratedFile($data)
     {
         \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
-        $files = new FileDescriptorSet();
-        $files->mergeFromString($data);
-        $file = FileDescriptor::buildFromProto($files->getFile()[0]);
+        try {
+            $files = new FileDescriptorSet();
+            $files->mergeFromString($data);
+            $file = FileDescriptor::buildFromProto($files->getFile()[0]);
 
-        foreach ($file->getMessageType() as $desc) {
-            $this->addDescriptor($desc);
-        }
-        unset($desc);
+            foreach ($file->getMessageType() as $desc) {
+                $this->addDescriptor($desc);
+            }
+            unset($desc);
 
-        foreach ($file->getEnumType() as $desc) {
-            $this->addEnumDescriptor($desc);
-        }
-        unset($desc);
+            foreach ($file->getEnumType() as $desc) {
+                $this->addEnumDescriptor($desc);
+            }
+            unset($desc);
 
-        foreach ($file->getMessageType() as $desc) {
-            $this->crossLink($desc);
+            foreach ($file->getMessageType() as $desc) {
+                $this->crossLink($desc);
+            }
+            unset($desc);
+        } finally {
+            \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
         }
-        unset($desc);
-        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
     }
 
     public function addMessage($name, $klass)
