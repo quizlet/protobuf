@@ -73,9 +73,9 @@ class Message
                 $setter = $field->getSetter();
                 $this->$setter($this->defaultValue($field));
             }
+            \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
             return;
         }
-        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
         $pool = DescriptorPool::getGeneratedPool();
         $this->desc = $pool->getDescriptorByClassName(get_class($this));
         if (is_null($this->desc)) {
