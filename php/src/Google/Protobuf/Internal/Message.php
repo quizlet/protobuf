@@ -66,6 +66,7 @@ class Message
         // MapEntry message is shared by all types of map fields, whose
         // descriptors are different from each other. Thus, we cannot find a
         // specific descriptor from the descriptor pool.
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         if (get_class($this) === 'Google\Protobuf\Internal\MapEntry') {
             $this->desc = $desc;
             foreach ($desc->getField() as $field) {
@@ -74,6 +75,7 @@ class Message
             }
             return;
         }
+        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
         $pool = DescriptorPool::getGeneratedPool();
         $this->desc = $pool->getDescriptorByClassName(get_class($this));
         if (is_null($this->desc)) {
@@ -144,17 +146,21 @@ class Message
                 }
             }
         }
+        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
     }
 
     protected function readOneof($number)
     {
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         $field = $this->desc->getFieldByNumber($number);
         $oneof = $this->desc->getOneofDecl()[$field->getOneofIndex()];
         $oneof_name = $oneof->getName();
         $oneof_field = $this->$oneof_name;
         if ($number === $oneof_field->getNumber()) {
+            \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
             return $oneof_field->getValue();
         } else {
+            \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
             return $this->defaultValue($field);
         }
     }
@@ -674,10 +680,12 @@ class Message
      */
     public function parseFromStream($input)
     {
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         while (true) {
             $tag = $input->readTag();
             // End of input.  This is a valid place to end, so return true.
             if ($tag === 0) {
+                \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
                 return true;
             }
 
@@ -1024,12 +1032,15 @@ class Message
      */
     public function serializeToStream(&$output)
     {
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         $fields = $this->desc->getField();
         foreach ($fields as $field) {
             if (!$this->serializeFieldToStream($output, $field)) {
+                \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
                 return false;
             }
         }
+        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
         return true;
     }
 
@@ -1402,12 +1413,14 @@ class Message
      */
     public function byteSize()
     {
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         $size = 0;
 
         $fields = $this->desc->getField();
         foreach ($fields as $field) {
             $size += $this->fieldByteSize($field);
         }
+        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
         return $size;
     }
 

@@ -87,6 +87,7 @@ class CodedInputStream
 
     private function recomputeBufferLimits()
     {
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         $this->buffer_end += $this->buffer_size_after_limit;
         $closest_limit = min($this->current_limit, $this->total_bytes_limit);
         if ($closest_limit < $this->total_bytes_read) {
@@ -98,6 +99,7 @@ class CodedInputStream
         } else {
             $this->buffer_size_after_limit = 0;
         }
+        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
     }
 
     private function consumedEntireMessage()
@@ -141,6 +143,7 @@ class CodedInputStream
      */
     public function readVarint64(&$var)
     {
+        \QMetric::startNonoverlappingBenchmark('spanner.app_time.protobuf');
         $count = 0;
 
         if (PHP_INT_SIZE == 4) {
@@ -150,9 +153,11 @@ class CodedInputStream
 
             do {
                 if ($this->current === $this->buffer_end) {
+                    \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
                     return false;
                 }
                 if ($count === self::MAX_VARINT_BYTES) {
+                    \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
                     return false;
                 }
                 $b = ord($this->buffer[$this->current]);
@@ -181,9 +186,11 @@ class CodedInputStream
 
             do {
                 if ($this->current === $this->buffer_end) {
+                    \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
                     return false;
                 }
                 if ($count === self::MAX_VARINT_BYTES) {
+                    \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
                     return false;
                 }
 
@@ -196,6 +203,7 @@ class CodedInputStream
 
             $var = $result;
         }
+        \QMetric::endNonoverlappingBenchmark('spanner.app_time.protobuf');
 
         return true;
     }
